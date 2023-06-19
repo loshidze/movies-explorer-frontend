@@ -1,0 +1,119 @@
+.navigation {
+  margin: 0;
+}
+
+.navigation__auth {
+  margin: 0;
+  display: flex;
+  gap: 30px;
+}
+
+.navigation__signup-link {
+  margin: 0;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  color: #000000;
+  text-decoration: none;
+}
+
+.navigation__signin-link {
+  margin: 0;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  color: #FFFFFF;
+  padding: 8px 20px;
+  background: #000000;
+  border-radius: 3px;
+}
+
+.navigation__logged-in {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.navigation__link {
+  margin: 0 20px 0 0;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: right;
+  color: #000000;
+}
+
+.navigation__link_activ {
+  font-weight: 500;
+}
+
+.navigation__profile-link {
+  margin: 0 0 0 30px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #000000;
+  padding: 8px 20px;
+  background: #F9F9F9;
+  border-radius: 20px;
+}
+
+.navigation__burger {
+  display: none;
+  margin: 0;
+  background-image: url(../../images/berger-menu.svg);
+  height: 44px;
+  width: 44px;
+  cursor: pointer;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.navigation__signup-link:hover {
+  opacity: 0.7;
+}
+
+.navigation__signin-link:hover {
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 768px) {
+  .navigation__logged-in {
+    display: none;
+  }
+
+  .navigation__burger {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .navigation__auth {
+    gap: 14px;
+  }
+  
+  .navigation__signup-link {
+    font-size: 10px;
+  }
+  
+  .navigation__signin-link {
+    font-size: 10px;
+    padding: 5px 12px;
+  }
+
+  .navigation__burger {
+    height: 40px;
+    width: 43px;
+  }
+}
