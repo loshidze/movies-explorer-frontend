@@ -7,7 +7,7 @@ function Login() {
   const { values, handleChange, errors } = useFormAndValidation({});
 
   return (
-    <section className='login'>
+    <main className='login'>
       <Link to='/' className='login__link'>
         <img className="login__logo" src={logo} alt="логотип"/>
       </Link>
@@ -22,6 +22,7 @@ function Login() {
           required
           value={values.email || ''}
           onChange={handleChange}
+          placeholder='Введите e-mail'
         />
         <span className='login__error'>{errors.email}</span>
         <label className='login__label'>Пароль</label>
@@ -34,6 +35,7 @@ function Login() {
           value={values.password || ''}
           onChange={handleChange}
           minLength="8"
+          placeholder='Введите пароль'
         />
         <span className='login__error'>{errors.password}</span>
         <button className='login__button'>Войти</button>
@@ -42,7 +44,7 @@ function Login() {
           <Link to='/signup' className='login__register-link'>Регистрация</Link>
         </div>  
       </form>
-    </section>
+    </main>
   )
 }
 

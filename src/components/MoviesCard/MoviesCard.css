@@ -20,7 +20,7 @@
   gap: 9px;
 }
 
-.movie_name {
+.movie__name {
   margin: 0;
   font-weight: 500;
   font-size: 15px;
@@ -28,7 +28,7 @@
   color: #000000;
 }
 
-.movie_duration {
+.movie__duration {
   margin: 0;
   font-weight: 400;
   font-size: 11px;

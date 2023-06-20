@@ -7,14 +7,14 @@ function MoviesCardList({ movies }) {
   const { pathname  } = useLocation();
 
   return (
-    <section className='movies-container'>
+    <div className='movies-container'>
       <div className='movies-container__list'>
         {movies.map((movie) => (
           <MoviesCard key={movie._id} movie={movie}/>
         ))}
       </div>
       {pathname  === '/movies' && <button className='movies-container__button'>Ещё</button>}
-    </section>
+    </div>
   )
 }
 

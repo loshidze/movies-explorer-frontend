@@ -17,8 +17,8 @@ function MoviesCard({ movie }) {
     <figure className="movie">
       <figcaption className="movie__caption">
         <div className='movie__description'>
-          <p className='movie_name'>{movie.nameRU}</p>
-          <p className='movie_duration'>{movie.nameRU}</p>
+          <p className='movie__name'>{movie.nameRU}</p>
+          <p className='movie__duration'>{movie.nameRU}</p>
         </div>
         {pathname === '/movies'
           ? (<button onClick={toggleSavedButton} aria-label="оценить" type="button" className={movieSaveButtonClassName}></button>)

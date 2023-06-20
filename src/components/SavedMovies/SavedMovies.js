@@ -29,10 +29,10 @@ function SavedMovies() {
   ];
 
   return (
-    <section className='movies'>
+    <main className='movies'>
       <SearchForm />
       <MoviesCardList movies={movies}/>
-    </section>
+    </main>
   )
 }
 

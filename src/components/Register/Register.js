@@ -7,7 +7,7 @@ function Register() {
   const { values, handleChange, errors } = useFormAndValidation({});
 
   return (
-    <section className='register'>
+    <main className='register'>
       <Link to='/' className='register__link'>
         <img className="register__logo" src={logo} alt="логотип"/>
       </Link>
@@ -23,6 +23,7 @@ function Register() {
           value={values.name || ''}
           onChange={handleChange}
           minLength="2"
+          placeholder='Введите имя'
         />
         <span className='register__error'>{errors.name}</span>
         <label className='register__label'>E-mail</label>
@@ -34,6 +35,7 @@ function Register() {
           required
           value={values.email || ''}
           onChange={handleChange}
+          placeholder='Введите e-mail'
         />
         <span className='register__error'>{errors.email}</span>
         <label className='register__label'>Пароль</label>
@@ -46,6 +48,7 @@ function Register() {
           value={values.password || ''}
           onChange={handleChange}
           minLength="8"
+          placeholder='Введите пароль'
         />
         <span className='register__error'>{errors.password}</span>
         <button className='register__button'>Зарегистрироваться</button>
@@ -54,7 +57,7 @@ function Register() {
           <Link to='/signin' className='register__login-link'>Войти</Link>
         </div>  
       </form>
-    </section>
+    </main>
   )
 }
 

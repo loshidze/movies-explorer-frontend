@@ -3,9 +3,9 @@ import React from 'react';
 function FilterCheckbox() {
   return (
     <label class="toggle">
-      <input class="toggle-checkbox" type="checkbox"/>
-      <div class="toggle-switch"></div>
-      <span class="toggle-label">Короткометражки</span>
+      <input class="toggle__checkbox" type="checkbox"/>
+      <span class="toggle__switch"></span>
+      <span class="toggle__label">Короткометражки</span>
     </label>
   )
 }
