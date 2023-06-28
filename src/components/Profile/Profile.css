@@ -34,11 +34,10 @@
   display: flex;
   margin: 0;
   flex-direction: column;
-  gap: 17px;
 }
 
 .profile__input-container {
-  margin: 0;
+  margin: 11px 0 0;
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -55,6 +54,7 @@
   font-size: 11px;
   line-height: 13px;
   color: #000000;
+  min-width: 40px;
 }
 
 .profile__input {
@@ -64,8 +64,25 @@
   font-weight: 400;
   font-size: 11px;
   line-height: 13px;
-  text-align: right;
+  text-align: center;
   color: #000000;
+  padding: 0;
+  background-color: burlywood;
+  width: 100%;
+}
+
+.profile__input:disabled {
+  background-color: white;
+  text-align: right;
+}
+
+.profile__error {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #FF4062;
+  margin: 6px 0 0;
 }
 
 .profile__buttons {
@@ -73,6 +90,30 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.profile__save-container {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile__success-messege {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: green;
+  margin: 0 0 6px;
+}
+.profile__error-messege {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #FF4062;
+  margin: 0 0 6px;
 }
 
 .profile__button-edit {
@@ -87,6 +128,37 @@
   cursor: pointer;
   border: none;
   background: none;
+}
+
+.profile__button-save {
+  padding: 13px 124px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #FFFFFF;
+  background: #000000;
+  border-radius: 3px;
+  cursor: pointer;
+  border: none;
+}
+
+.profile__button-not-save {
+  text-decoration: none;
+  color: #FF4062;
+  border: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  width: fit-content;
+  background: #FFFFFF;
+  cursor: pointer;
+}
+
+.profile__button-save:disabled {
+  background: #F9F9F9;
+  cursor: auto;
 }
 
 .profile__button-exit {
@@ -126,6 +198,12 @@
   }
 
   .profile__button-edit {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .profile__button-save {
+    padding: 15px 67px;
     font-size: 12px;
     line-height: 15px;
   }

@@ -3,8 +3,14 @@ import { Link } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation'
 
-function Login() {
-  const { values, handleChange, errors } = useFormAndValidation({});
+function Login({ onLogin, apiLoginErr }) {
+  const { values, handleChange, errors, isValid, resetForm } = useFormAndValidation({});
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    onLogin(values);
+    resetForm();
+  }
 
   return (
     <main className='login'>
@@ -12,7 +18,7 @@ function Login() {
         <img className="login__logo" src={logo} alt="логотип"/>
       </Link>
       <h2 className='login__title'>Рады видеть!</h2>
-      <form className='login__form' noValidate>
+      <form className='login__form' noValidate onSubmit={handleSubmit}>
         <label className='login__label'>E-mail</label>
         <input
           className='login__input'
@@ -38,7 +44,8 @@ function Login() {
           placeholder='Введите пароль'
         />
         <span className='login__error'>{errors.password}</span>
-        <button className='login__button'>Войти</button>
+        <span className='login__api-error'>{apiLoginErr.errorText}</span>
+        <button className='login__button' disabled={!isValid}>Войти</button>
         <div className='login__question'>
           <span>Ещё не зарегистрированы?</span>
           <Link to='/signup' className='login__register-link'>Регистрация</Link>

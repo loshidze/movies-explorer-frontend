@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 
-function Navigation() {
+function Navigation({ loggedIn }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const { pathname } = useLocation();
@@ -13,7 +13,7 @@ function Navigation() {
 
   return (
     <nav className='navigation'>
-      {pathname === '/' ? (
+      {!loggedIn ? (
         <div className='navigation__auth'>
           <Link to='/signup' className='navigation__signup-link'>Регистрация</Link>
           <Link to='/signin' className='navigation__signin-link'>Войти</Link>

@@ -2,8 +2,9 @@ import React from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import movie1 from '../../images/movie1.png';
+import Preloader from '../Preloader/Preloader';
 
-function Movies() {
+function Movies({ isLoading }) {
 
   const movies = [
     {
@@ -39,7 +40,10 @@ function Movies() {
   return (
     <main className='movies'>
       <SearchForm />
-      <MoviesCardList movies={movies}/>
+      {isLoading &&
+      <Preloader/>}
+      {!isLoading &&
+      <MoviesCardList movies={movies}/>}
     </main>
   )
 }
