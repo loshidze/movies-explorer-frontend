@@ -6,14 +6,16 @@ function MoviesCard({ movie, onSave, onDelete, savedMovies }) {
   const { pathname  } = useLocation();
   const url = 'https://api.nomoreparties.co/';
 
-  React.useEffect(() => {
-    if (pathname === '/movies' && savedMovies.some((item) => item.movieId === movie.id)) {
-      setIsSaved(true)
-    }
-    if (pathname === '/movies' && !savedMovies.some((item) => item.movieId === movie.id)) {
-      setIsSaved(false)
-    }
-  }, [savedMovies, movie.id])
+  // const isSaved = savedMovies.some(i => i.movieId === movie.id);
+
+  // React.useEffect(() => {
+  //   if (pathname === '/movies' && savedMovies.some((item) => item.movieId === movie.id)) {
+  //     setIsSaved(true)
+  //   }
+  //   if (pathname === '/movies' && !savedMovies.some((item) => item.movieId === movie.id)) {
+  //     setIsSaved(false)
+  //   }
+  // }, [savedMovies, movie.id])
 
 
   const convertTime = (duration) => {
@@ -26,6 +28,7 @@ function MoviesCard({ movie, onSave, onDelete, savedMovies }) {
 
   function handleSavedMovie() {
     onSave(
+      // movie
       {
         "country": movie.country,
         "director": movie.director,
@@ -43,9 +46,8 @@ function MoviesCard({ movie, onSave, onDelete, savedMovies }) {
     // setIsSaved(true);
   }
 
-  function handleDeleteMovie() {
-    onDelete(movie);
-    // setIsSaved(false);
+  const handleDeleteMovie = () => {
+    onDelete(movie._id);
   }
 
   return (
@@ -56,7 +58,7 @@ function MoviesCard({ movie, onSave, onDelete, savedMovies }) {
           <p className='movie__duration'>{convertTime(movie.duration)}</p>
         </div>
         {pathname === '/movies'
-          ? (<button onClick={handleSavedMovie} aria-label="оценить" type="button" className={movieSaveButtonClassName}></button>)
+          ? (<button onClick={isSaved ? handleSavedMovie : handleDeleteMovie} aria-label="оценить" type="button" className={movieSaveButtonClassName}></button>)
           : (<button onClick={handleDeleteMovie} aria-label="удалить" type="button" className='movie__button-delete'></button>)}
       </figcaption>
       <a href={movie.trailerLink} target='_blank' rel="noreferrer">
