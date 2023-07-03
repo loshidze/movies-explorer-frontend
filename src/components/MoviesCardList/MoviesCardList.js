@@ -5,22 +5,8 @@ import useResize from '../../hooks/useResize';
 
 function MoviesCardList({ movies, onSave, onDelete, noResult, apiMovieErr, savedMovies }) {
 
-  // const pathname = useLocation();
-  // let size = useResize();
-  // const [moviesToAdd, setMoviesToAdd] = React.useState(0);
-
-  // React.useEffect(() => {
-  //   setMoviesToAdd(0);
-  // }, [movies]);
-
-  // const moviesToRender = React.useMemo(() => {
-  //   const countToRender = size.width < 768 ? 5 : size.width < 1280 ? 8 : 12;
-
-  //   return movies.slice(0, countToRender + moviesToAdd);
-  // }, [movies, moviesToAdd, size]);
-
   const { pathname } = useLocation();
-  let size = useResize();
+  const size = useResize();
   const [moviesToAdd, setMoviesToAdd] = React.useState(0);
 
   React.useEffect(() => {
@@ -33,6 +19,9 @@ function MoviesCardList({ movies, onSave, onDelete, noResult, apiMovieErr, saved
     return movies.slice(0, countToRender + moviesToAdd);
   }, [movies, moviesToAdd, size]);
 
+  const showMoreMovies = () => {
+    setMoviesToAdd((prev) => prev + (size.width >= 1280 ? 3 : 2))
+  }
 
   return (
     <div className='movies-container'>
@@ -49,9 +38,7 @@ function MoviesCardList({ movies, onSave, onDelete, noResult, apiMovieErr, saved
       </div>
       {pathname  === '/movies' &&
         movies.length > moviesToRender.length &&
-        <button className='movies-container__button' onClick={() => {
-          setMoviesToAdd((prev) => prev + (size.width >= 1280 ? 3 : 2));
-        }}>Ещё</button>}
+        <button className='movies-container__button' onClick={showMoreMovies}>Ещё</button>}
     </div>
   )
 }

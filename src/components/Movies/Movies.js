@@ -2,22 +2,13 @@ import React from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
-import * as moviesApi from '../../utils/MoviesApi'
+import * as moviesApi from '../../utils/MoviesApi';
 
-function Movies({ onSave, onDelete, savedMovies }) {
-  const [movies, setMovies] = React.useState([]);
+function Movies({ onSave, savedMovies }) {
+  const [filteredMovies, setFilteredMovies] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [noResult, setNoResult] = React.useState(false);
   const [apiMovieErr, setApiMovieErr] = React.useState(false);
-
-  // React.useEffect(() => {
-  //   const showSearchedMovies = () => {
-  //     const searchedMovies = JSON.parse(localStorage.getItem('searchedMovies'));
-  //     setMovies(searchedMovies);
-  //   }
-
-  //   showSearchedMovies();
-  // }, [])
 
   const search = (movies, values) => {
     return movies.filter((movie) => movie.nameRU.toLowerCase().includes(values.movie.toLowerCase()))
@@ -27,7 +18,7 @@ function Movies({ onSave, onDelete, savedMovies }) {
     return searchResult.filter((movie) => movie.duration <= 40)
   }
 
-  const handleNoResult = (res) => {
+  const showNoResult = (res) => {
     if (res.length === 0) {
       setNoResult(true);
     } else {
@@ -43,18 +34,16 @@ function Movies({ onSave, onDelete, savedMovies }) {
           localStorage.setItem('movies', JSON.stringify(res));
         }
         const moviesApi = JSON.parse(localStorage.getItem('movies'));
+        const searchResult = search(moviesApi, values);
+        localStorage.setItem('searchedMovies', JSON.stringify(searchResult));
         if (isChecked) {
-          const searchResult = search(moviesApi, values);
           const filterResult = filter(searchResult);
-          localStorage.setItem('searchedMovies', JSON.stringify(searchResult));
-          setMovies(filterResult);
-          handleNoResult(filterResult);
+          setFilteredMovies(filterResult);
+          showNoResult(filterResult);
         }
         if (!isChecked) {
-          const searchResult = search(moviesApi, values);
-          localStorage.setItem('searchedMovies', JSON.stringify(searchResult));
-          setMovies(searchResult);
-          handleNoResult(searchResult);
+          setFilteredMovies(searchResult);
+          showNoResult(searchResult);
         }
         setSearchParams(isChecked, values);
         setApiMovieErr(false)
@@ -87,19 +76,17 @@ function Movies({ onSave, onDelete, savedMovies }) {
   }
 
   const filterMovies = (isChecked) => {
-    const movies = JSON.parse(localStorage.getItem('searchedMovies'));
     const searchedMovies = JSON.parse(localStorage.getItem('searchedMovies'));
-    if (isChecked && movies) {
+    if (isChecked && searchedMovies) {
       const filterResult = filter(searchedMovies);
-      setMovies(filterResult);
-      handleNoResult(filterResult);
+      setFilteredMovies(filterResult);
+      showNoResult(filterResult);
     }
-    if (!isChecked && movies) {
-      setMovies(movies);
-      setNoResult(false);
+    if (!isChecked && searchedMovies) {
+      setFilteredMovies(searchedMovies);
+      showNoResult(searchedMovies);
     }
   }
-
 
   return (
     <main className='movies'>
@@ -107,7 +94,7 @@ function Movies({ onSave, onDelete, savedMovies }) {
       {isLoading &&
       <Preloader />}
       {!isLoading &&
-      <MoviesCardList onSave={onSave} onDelete={onDelete} movies={movies} noResult={noResult} apiMovieErr={apiMovieErr} savedMovies={savedMovies} />}
+      <MoviesCardList onSave={onSave} movies={filteredMovies} noResult={noResult} apiMovieErr={apiMovieErr} savedMovies={savedMovies} />}
     </main>
   )
 }

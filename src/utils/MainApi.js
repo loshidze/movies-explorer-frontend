@@ -4,7 +4,6 @@ function checkResponse(res) {
   if (res.ok) {
     return res.json();
   }
-  // return Promise.reject(`Ошибка: ${res.status}`);
   return res.text().then((text) => {
     return Promise.reject({
       status: res.status,

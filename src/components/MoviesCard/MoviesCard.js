@@ -1,22 +1,14 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 function MoviesCard({ movie, onSave, onDelete, savedMovies }) {
-  const [isSaved, setIsSaved] = React.useState(false);
+
   const { pathname  } = useLocation();
   const url = 'https://api.nomoreparties.co/';
 
-  // const isSaved = savedMovies.some(i => i.movieId === movie.id);
-
-  // React.useEffect(() => {
-  //   if (pathname === '/movies' && savedMovies.some((item) => item.movieId === movie.id)) {
-  //     setIsSaved(true)
-  //   }
-  //   if (pathname === '/movies' && !savedMovies.some((item) => item.movieId === movie.id)) {
-  //     setIsSaved(false)
-  //   }
-  // }, [savedMovies, movie.id])
-
+  const isSaved = savedMovies
+    ? savedMovies.some((i) => i.movieId === movie.id)
+    : false;
 
   const convertTime = (duration) => {
     return `${Math.floor(duration / 60)}ч ${duration % 60}м`
@@ -26,9 +18,12 @@ function MoviesCard({ movie, onSave, onDelete, savedMovies }) {
     `movie__button-save ${isSaved && 'movie__button-save_active'}`
   );
 
+  const savedMovie = savedMovies
+    ? savedMovies.find((i) => i.movieId === movie.id)
+    : '';
+
   function handleSavedMovie() {
     onSave(
-      // movie
       {
         "country": movie.country,
         "director": movie.director,
@@ -41,9 +36,10 @@ function MoviesCard({ movie, onSave, onDelete, savedMovies }) {
         "nameEN": movie.nameEN,
         "thumbnail": `${url}${movie.image.formats.thumbnail.url}`,
         "movieId": movie.id
-      }
+      },
+      isSaved,
+      savedMovie?._id
     );
-    // setIsSaved(true);
   }
 
   const handleDeleteMovie = () => {
@@ -58,7 +54,7 @@ function MoviesCard({ movie, onSave, onDelete, savedMovies }) {
           <p className='movie__duration'>{convertTime(movie.duration)}</p>
         </div>
         {pathname === '/movies'
-          ? (<button onClick={isSaved ? handleSavedMovie : handleDeleteMovie} aria-label="оценить" type="button" className={movieSaveButtonClassName}></button>)
+          ? (<button onClick={handleSavedMovie} aria-label="оценить" type="button" className={movieSaveButtonClassName}></button>)
           : (<button onClick={handleDeleteMovie} aria-label="удалить" type="button" className='movie__button-delete'></button>)}
       </figcaption>
       <a href={movie.trailerLink} target='_blank' rel="noreferrer">

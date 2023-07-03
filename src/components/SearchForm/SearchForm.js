@@ -3,10 +3,12 @@ import { useLocation } from 'react-router-dom';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation'
 
-function SearchForm({ onSearch, getSearchParams, filterMovies, updateCheckboxParams }) {
+function SearchForm({ onSearch, getSearchParams, filterMovies, updateCheckboxParams, getSearchSavedParams }) {
+
+
   const [isChecked, setIsChecked] = React.useState(false);
   const [noSearch, setNoSearch] = React.useState('');
-  const { values, handleChange, setValues, errors, isValid } = useFormAndValidation({});
+  const { values, handleChange, setValues } = useFormAndValidation({});
   const { pathname } = useLocation();
 
   React.useEffect(() => {
