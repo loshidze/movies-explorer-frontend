@@ -1,15 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation'
 
-function Login({ onLogin, apiLoginErr }) {
-  const { values, handleChange, errors, isValid, resetForm } = useFormAndValidation({});
+function Login({ onLogin, apiLoginErr, loggedIn, isFormLoading }) {
+  const { values, handleChange, errors, isValid } = useFormAndValidation({});
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (loggedIn) {
+      navigate('/movies');
+    }
+  }, [loggedIn]);
 
   function handleSubmit(e) {
     e.preventDefault();
     onLogin(values);
-    resetForm();
   }
 
   return (
@@ -29,6 +35,7 @@ function Login({ onLogin, apiLoginErr }) {
           value={values.email || ''}
           onChange={handleChange}
           placeholder='Введите e-mail'
+          disabled={isFormLoading}
         />
         <span className='login__error'>{errors.email}</span>
         <label className='login__label'>Пароль</label>
@@ -42,10 +49,11 @@ function Login({ onLogin, apiLoginErr }) {
           onChange={handleChange}
           minLength="8"
           placeholder='Введите пароль'
+          disabled={isFormLoading}
         />
         <span className='login__error'>{errors.password}</span>
         <span className='login__api-error'>{apiLoginErr.errorText}</span>
-        <button className='login__button' disabled={!isValid}>Войти</button>
+        <button className='login__button' disabled={!isValid || isFormLoading}>Войти</button>
         <div className='login__question'>
           <span>Ещё не зарегистрированы?</span>
           <Link to='/signup' className='login__register-link'>Регистрация</Link>

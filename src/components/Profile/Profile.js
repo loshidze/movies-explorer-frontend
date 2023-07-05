@@ -2,7 +2,7 @@ import React from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation'; 
 
-function Profile({ onLogout, onUpdateUser, apiAnswerSuccess, apiAnswerErr }) {
+function Profile({ onLogout, onUpdateUser, apiAnswerSuccess, apiAnswerErr, isFormLoading }) {
   const [isDisabled, setIsDisabled] = React.useState(true);
   const [editButton, setEditButton] = React.useState(false);
   const currentUser = React.useContext(CurrentUserContext);
@@ -49,7 +49,7 @@ function Profile({ onLogout, onUpdateUser, apiAnswerSuccess, apiAnswerErr }) {
                 name='name'
                 value={values.name || ''}
                 onChange={handleChange}
-                disabled={isDisabled}
+                disabled={isDisabled || isFormLoading}
                 required
                 minLength="2"
                 pattern='^[a-zA-Zа-яА-Я\s\-]+$'
@@ -65,7 +65,7 @@ function Profile({ onLogout, onUpdateUser, apiAnswerSuccess, apiAnswerErr }) {
                 name='email'
                 value={values.email || ''}
                 onChange={handleChange}
-                disabled={isDisabled}
+                disabled={isDisabled || isFormLoading}
                 required
                 pattern='^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
               />

@@ -3,19 +3,21 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 import * as moviesApi from '../../utils/MoviesApi';
+import { TIME } from '../../utils/constants';
 
-function Movies({ onSave, savedMovies }) {
+function Movies({ onSave, savedMovies, isFormLoading, setIsFormLoading }) {
   const [filteredMovies, setFilteredMovies] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [noResult, setNoResult] = React.useState(false);
   const [apiMovieErr, setApiMovieErr] = React.useState(false);
+  const [isChecked, setIsChecked] = React.useState(false);
 
   const search = (movies, values) => {
     return movies.filter((movie) => movie.nameRU.toLowerCase().includes(values.movie.toLowerCase()))
   }
 
   const filter = (searchResult) => {
-    return searchResult.filter((movie) => movie.duration <= 40)
+    return searchResult.filter((movie) => movie.duration <= TIME)
   }
 
   const showNoResult = (res) => {
@@ -28,33 +30,46 @@ function Movies({ onSave, savedMovies }) {
 
   const handleSearch = (isChecked, values) => {
     setIsLoading(true);
-    moviesApi.getMovies()
+    setIsFormLoading(true);
+    if (!localStorage.getItem('movies')) {
+      moviesApi.getMovies()
       .then((res) => {
-        if (!localStorage.getItem('movies')) {
-          localStorage.setItem('movies', JSON.stringify(res));
-        }
-        const moviesApi = JSON.parse(localStorage.getItem('movies'));
-        const searchResult = search(moviesApi, values);
-        localStorage.setItem('searchedMovies', JSON.stringify(searchResult));
-        if (isChecked) {
-          const filterResult = filter(searchResult);
-          setFilteredMovies(filterResult);
-          showNoResult(filterResult);
-        }
-        if (!isChecked) {
-          setFilteredMovies(searchResult);
-          showNoResult(searchResult);
-        }
-        setSearchParams(isChecked, values);
+        localStorage.setItem('movies', JSON.stringify(res));
+        filterOnSearch(isChecked, values)
         setApiMovieErr(false)
       })
       .catch((err) => {
         console.log(err);
+        setIsLoading(false)
         setApiMovieErr(true)
       })
       .finally(() => {
         setIsLoading(false);
+        setIsFormLoading(false);
       })
+    } else {
+    filterOnSearch(isChecked, values)
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsFormLoading(false);
+    }, 200)
+    }
+  }
+
+  const filterOnSearch = (isChecked, values) => {
+    const moviesList = JSON.parse(localStorage.getItem('movies'));
+    const searchResult = search(moviesList, values);
+    localStorage.setItem('searchedMovies', JSON.stringify(searchResult));
+    if (isChecked) {
+      const filterResult = filter(searchResult);
+      setFilteredMovies(filterResult);
+      showNoResult(filterResult);
+    }
+    if (!isChecked) {
+      setFilteredMovies(searchResult);
+      showNoResult(searchResult);
+    }
+    setSearchParams(isChecked, values);
   }
 
   const setSearchParams = (isChecked, values) => {
@@ -90,7 +105,7 @@ function Movies({ onSave, savedMovies }) {
 
   return (
     <main className='movies'>
-      <SearchForm onSearch={handleSearch} getSearchParams={getSearchParams} updateCheckboxParams={updateCheckboxParams} filterMovies={filterMovies} />
+      <SearchForm onSearch={handleSearch} getSearchParams={getSearchParams} updateCheckboxParams={updateCheckboxParams} filterMovies={filterMovies} isFormLoading={isFormLoading} isChecked={isChecked} setIsChecked={setIsChecked} />
       {isLoading &&
       <Preloader />}
       {!isLoading &&

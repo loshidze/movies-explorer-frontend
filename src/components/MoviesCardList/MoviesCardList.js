@@ -2,6 +2,15 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import useResize from '../../hooks/useResize';
+import {
+  DESKTOP_SIZE,
+  TABLET_SIZE,
+  DESKTOP_QUANTITY,
+  TABLET_QUANTITY,
+  MOBILE_QUANTITY,
+  DESKTOP_ADD_QUANTITY,
+  TABLET_ADD_QUANTITY
+} from '../../utils/constants'
 
 function MoviesCardList({ movies, onSave, onDelete, noResult, apiMovieErr, savedMovies }) {
 
@@ -14,13 +23,13 @@ function MoviesCardList({ movies, onSave, onDelete, noResult, apiMovieErr, saved
   }, [movies]);
 
   const moviesToRender = React.useMemo(() => {
-    const countToRender = size.width < 768 ? 5 : size.width < 1280 ? 8 : 12;
+    const countToRender = size.width < TABLET_SIZE ? MOBILE_QUANTITY : size.width < DESKTOP_SIZE ? TABLET_QUANTITY : DESKTOP_QUANTITY;
 
     return movies.slice(0, countToRender + moviesToAdd);
   }, [movies, moviesToAdd, size]);
 
   const showMoreMovies = () => {
-    setMoviesToAdd((prev) => prev + (size.width >= 1280 ? 3 : 2))
+    setMoviesToAdd((prev) => prev + (size.width >= DESKTOP_SIZE ? DESKTOP_ADD_QUANTITY : TABLET_ADD_QUANTITY))
   }
 
   return (

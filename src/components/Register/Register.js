@@ -1,15 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation'
 
-function Register({ onRegister, apiAnswerErr }) {
-  const { values, handleChange, errors, isValid, resetForm } = useFormAndValidation({});
+function Register({ onRegister, apiAnswerErr, loggedIn, isFormLoading }) {
+  const { values, handleChange, errors, isValid } = useFormAndValidation({});
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (loggedIn) {
+      navigate('/movies');
+    }
+  }, [loggedIn]);
 
   function handleSubmit(e) {
     e.preventDefault();
     onRegister(values);
-    resetForm();
   }
 
   return (
@@ -31,6 +37,7 @@ function Register({ onRegister, apiAnswerErr }) {
           minLength="2"
           placeholder='Введите имя'
           pattern='^[a-zA-Zа-яА-Я\s\-]+$'
+          disabled={isFormLoading}
         />
         <span className='register__error'>{errors.name}</span>
         <label className='register__label'>E-mail</label>
@@ -44,6 +51,7 @@ function Register({ onRegister, apiAnswerErr }) {
           onChange={handleChange}
           placeholder='Введите e-mail'
           pattern='^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+          disabled={isFormLoading}
         />
         <span className='register__error'>{errors.email}</span>
         <label className='register__label'>Пароль</label>
@@ -57,10 +65,11 @@ function Register({ onRegister, apiAnswerErr }) {
           onChange={handleChange}
           minLength="8"
           placeholder='Введите пароль'
+          disabled={isFormLoading}
         />
         <span className='register__error'>{errors.password}</span>
         {apiAnswerErr && <span className='register__api-error'>{apiAnswerErr.errorText}</span>}
-        <button className='register__button' disabled={!isValid}>Зарегистрироваться</button>
+        <button className='register__button' disabled={!isValid || isFormLoading}>Зарегистрироваться</button>
         <div className='register__question'>
           <span>Уже зарегистрированы?</span>
           <Link to='/signin' className='register__login-link'>Войти</Link>
