@@ -5,6 +5,19 @@
   justify-content: center;
 }
 
+.movies-container__no-result {
+  font-weight: 500;
+  font-size: 27px;
+  align-self: center;
+}
+
+.movies-container__error {
+  font-weight: 500;
+  font-size: 17px;
+  align-self: center;
+  color: #FF4062;
+}
+
 .movies-container__list {
   margin: 0;
   padding: 70px 70px 30px;

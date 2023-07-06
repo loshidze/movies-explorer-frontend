@@ -1,11 +1,11 @@
 import React from 'react';
 
-function FilterCheckbox() {
+function FilterCheckbox({ isChecked, toggleCheckbox }) {
   return (
-    <label class="toggle">
-      <input class="toggle__checkbox" type="checkbox"/>
-      <span class="toggle__switch"></span>
-      <span class="toggle__label">Короткометражки</span>
+    <label className="toggle">
+      <input className="toggle__checkbox" type="checkbox" checked={isChecked || ''} onChange={toggleCheckbox}/>
+      <span className="toggle__switch"></span>
+      <span className="toggle__label">Короткометражки</span>
     </label>
   )
 }
