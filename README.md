@@ -9,19 +9,19 @@
 ## Запуск проекта
 - Клонировать репозиторий
 
-git clone https://github.com/mintolime/movies-explorer-frontend.git
+`git clone https://github.com/mintolime/movies-explorer-frontend.git`
 
 - Установить зависимости
 
-cd movies-explorer-frontend
+`cd movies-explorer-frontend`
 
-npm install
+`npm install`
 
 - Для запуска использовать команды
 
-npm start
+`npm start`
 
-Запуск приложения в режиме разработки. Для просмотра результатов в браузере откройте http://localhost:3000
+Запуск приложения в режиме разработки. Для просмотра результатов в браузере откройте `http://localhost:3000`
 
 ## Ссылка на макет:
 https://disk.yandex.ru/d/Eprsr-szCSXYPw
